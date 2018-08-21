@@ -3,17 +3,27 @@
    [re-frame.core :as f]
    [reagent.ratom :refer-macros [reaction]]))
 
-(f/register-sub
-  :name
+(f/reg-sub-raw
+  :screen
   (fn [db]
-    (reaction (:name @db))))
+    (reaction (:screen @db)) ) )
 
-(f/register-sub
-  :items
+(f/reg-sub-raw
+  :board
   (fn [db]
-    (reaction (:items @db))))
+    (reaction (:board @db)) ) )
 
-(f/register-sub
-  :drag
-  (fn [db]
-    (reaction (:drag @db))))
+; (f/reg-sub-raw
+;   :name
+;   (fn [db]
+;     (reaction (:name @db))))
+
+; (f/reg-sub-raw
+;   :items
+;   (fn [db]
+;     (reaction (:items @db))))
+
+; (f/reg-sub-raw
+;   :drag
+;   (fn [db]
+;     (reaction (:drag @db))))

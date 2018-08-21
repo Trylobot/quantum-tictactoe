@@ -5,7 +5,6 @@
     [reagent "0.8.1"]
     [re-frame "0.10.5"]
     [figwheel "0.5.16"]
-    [re-com "2.1.0"]
   ]
 
   :plugins [[lein-cljsbuild "1.1.7"]

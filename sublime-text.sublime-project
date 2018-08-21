@@ -3,7 +3,8 @@
 	[
 		{
 			"path": ".",
-      "folder_exclude_patterns": ["target"],
+      "folder_exclude_patterns": ["target","resources/public/js/compiled"],
+      "file_exclude_patterns": ["figwheel_server.log"]
 		}
 	]
 }
