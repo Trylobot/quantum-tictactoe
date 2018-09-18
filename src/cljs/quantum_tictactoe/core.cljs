@@ -11,7 +11,7 @@
 
 (defn init []
   (f/dispatch-sync [:initialize-db])
-  (.addEventListener js/window "resize" e/window-resize-handler)
+  ; (.addEventListener js/window "resize" e/window-resize-handler)
   (r/render [v/main-panel] (.getElementById js/document "app")) )
 
 (init)

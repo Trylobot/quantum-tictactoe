@@ -3,10 +3,10 @@
    [re-frame.core :as f]
    [reagent.ratom :refer-macros [reaction]]))
 
-(f/reg-sub-raw
-  :screen
-  (fn [db]
-    (reaction (:screen @db)) ) )
+; (f/reg-sub-raw
+;   :screen
+;   (fn [db]
+;     (reaction (:screen @db)) ) )
 
 (f/reg-sub-raw
   :board

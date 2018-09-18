@@ -3,18 +3,17 @@
    [re-frame.core :as f]))
 
 (def default-db {
-  :screen {
-    :width  (.-innerWidth  js/window),
-    :height (.-innerHeight js/window) }
-  :board {
-    :moves [] } })
+  ; :screen {
+  ;   :width  (.-innerWidth  js/window),
+  ;   :height (.-innerHeight js/window) }
+  :board {} })
 
 (f/reg-event-db :initialize-db
   (fn [_ _] default-db) )
 
-(f/reg-event-db :window-resize
-  (fn [db size]
-    (assoc db :screen size) ) ) ; {:height _, :width _}
+; (f/reg-event-db :window-resize
+;   (fn [db size]
+;     (assoc db :screen size) ) ) ; {:height _, :width _}
 
 
 ; (f/reg-event-db

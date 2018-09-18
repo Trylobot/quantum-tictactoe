@@ -35,25 +35,27 @@
 ;             :width width
 ;             :height height}]))
 
-(defn board-view [board screen]
-  [:text {:x 5, :y 15
-          :style {:fill "white" :font-family "consolas"}}
-    (pr-str screen)])
+(defn board-view [board]
+  [:g [:rect {:fill "#202020" :x 0 :y 0 :width 1200 :height 1200 }]
+      [:line {:x1 400 :y1 50 :x2 400 :y2 1150 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
+      [:line {:x1 800 :y1 50 :x2 800 :y2 1150 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
+      [:line {:x1 50 :y1 400 :x2 1150 :y2 400 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
+      [:line {:x1 50 :y1 800 :x2 1150 :y2 800 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }] ])
 
 ; (defn svg-pane
 (defn main-panel []
   (let [;drag (f/subscribe [:drag])
         ;items (f/subscribe [:items])
         ;mouse-handler (e/mouse-event-handler)
-        screen (f/subscribe [:screen])
         board (f/subscribe [:board]) ]
     (fn []
       [:svg {:class "main-panel"
-             :style {:background "rgba(32,32,32,1)" }}
+             :view-box "0 0 1200 1200"
+             :style {:background "#202020" }}
              ; :on-mouse-up mouse-handler
              ; :on-mouse-down mouse-handler
              ; :on-mouse-move mouse-handler}
-        (board-view board screen)
+        [board-view board]
         ; (concat
         ;  (when-let [{:keys [start pos]} @drag]
         ;    [(rect {:id :creating

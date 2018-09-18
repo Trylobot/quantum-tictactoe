@@ -3,15 +3,15 @@
    [re-frame.core :as f]
    [reagent.core :as r]))
 
-(defn window-resize-handler
-  []
-  (let [component (r/current-component)]
-    (fn [_]
-      ;(.log js/console (pr-str e))
-      (f/dispatch [:window-resize {
-        :width  (.-innerWidth  js/window)
-        :height (.-innerHeight js/window)
-      }]) ) ) )
+; (defn window-resize-handler
+;   []
+;   (let [component (r/current-component)]
+;     (fn [_]
+;       ;(.log js/console (pr-str e))
+;       (f/dispatch [:window-resize {
+;         :width  (.-innerWidth  js/window)
+;         :height (.-innerHeight js/window)
+;       }]) ) ) )
 
 ; (defn mouse-event-handler
 ;   []
