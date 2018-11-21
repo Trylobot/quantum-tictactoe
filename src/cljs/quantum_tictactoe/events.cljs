@@ -13,6 +13,12 @@
 ;         :height (.-innerHeight js/window)
 ;       }]) ) ) )
 
+(defn mouse-click-handler [i]
+  (let [component (r/current-component)]
+    (fn [e]
+      (.preventDefault e)
+      (f/dispatch [:board-click {:position i} ]) )))
+
 ; (defn mouse-event-handler
 ;   []
 ;   (let [component (r/current-component)]

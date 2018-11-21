@@ -37,10 +37,25 @@
 
 (defn board-view [board]
   [:g [:rect {:fill "#202020" :x 0 :y 0 :width 1200 :height 1200 }]
-      [:line {:x1 400 :y1 50 :x2 400 :y2 1150 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
-      [:line {:x1 800 :y1 50 :x2 800 :y2 1150 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
-      [:line {:x1 50 :y1 400 :x2 1150 :y2 400 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
-      [:line {:x1 50 :y1 800 :x2 1150 :y2 800 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }] ])
+      [:line {:x1 400 :y1 50 :x2 400 :y2 1150 
+              :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
+      [:line {:x1 800 :y1 50 :x2 800 :y2 1150 
+              :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
+      [:line {:x1 50 :y1 400 :x2 1150 :y2 400 
+              :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
+      [:line {:x1 50 :y1 800 :x2 1150 :y2 800 
+              :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }] ])
+
+(defn button-array []
+  [:g (map (fn [i] 
+        (let [r (int (/ i 3))
+              c (mod i 3)]
+          [:rect {:x (* c 400) :y (* r 400) :width 400 :height 400 
+                  :fill "transparent"
+                  :on-click (e/mouse-click-handler i) 
+                  :pointer-events "bounding-box" 
+                  :key i }] )) 
+      (range 9)) ] )
 
 ; (defn svg-pane
 (defn main-panel []
@@ -50,12 +65,13 @@
         board (f/subscribe [:board]) ]
     (fn []
       [:svg {:class "main-panel"
-             :view-box "0 0 1200 1200"
-             :style {:background "#202020" }}
+             :view-box "0 0 1200 1200" }
+             ; :style {:background "#202020" }}
              ; :on-mouse-up mouse-handler
              ; :on-mouse-down mouse-handler
              ; :on-mouse-move mouse-handler}
         [board-view board]
+        [button-array]
         ; (concat
         ;  (when-let [{:keys [start pos]} @drag]
         ;    [(rect {:id :creating

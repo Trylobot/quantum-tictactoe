@@ -15,6 +15,10 @@
 ;   (fn [db size]
 ;     (assoc db :screen size) ) ) ; {:height _, :width _}
 
+(f/reg-event-db :board-click
+  (fn [db [_ e]]
+    (.log js/console (:position e)) ; debugging
+    db))
 
 ; (f/reg-event-db
 ;   :mouse-event
