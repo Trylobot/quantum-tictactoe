@@ -15,4 +15,5 @@
 (f/reg-event-db :board-click
   (fn [db [_ {:keys [position]}]]
     ; TODO: examine board state to decide what gets changed, if anything, when a cell is clicked
-    (assoc-in db [:board :cells position] :x) ) )
+    (assoc-in db [:board :cells position] 
+      (case (rand-int 2) 0 :x 1 :o nil) ) ))

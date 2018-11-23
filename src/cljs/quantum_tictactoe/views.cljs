@@ -14,23 +14,17 @@
         col (mod i rules/board-width)
         cell-size 400
         cell-center (/ cell-size 2)
-        content-size (- cell-size 50)
-        x-offset (col * cell-size)
-        y-offset (row * cell-size)
-        p1-color "b6f97b"
-        p2-color "fd94fc"]
+        margin 25
+        x-offset (* col cell-size)
+        y-offset (* row cell-size)
+        p1-color "#b6f97b"
+        p2-color "#fd94fc"]
     (case cell
       ; classic "X"
-      :x [:g [:line {:x1 (+ 25 x-offset)           :y1 (+ 25 y-offset) 
-                     :x2 (+ content-size x-offset) :y2 (+ content-size y-offset) 
-                     :stroke-width 25 :stroke p1-color :stroke-linecap "round" }]
-             [:line {:x1 (+ content-size x-offset) :y1 (+ 25 y-offset) 
-                     :x2 (+ 25 x-offset)           :y2 (+ content-size y-offset) 
-                     :stroke-width 25 :stroke p1-color :stroke-linecap "round" }]] 
+      :x [:g [:line {:x1 (+ x-offset margin) :y1 (+ y-offset margin) :x2 (- (+ cell-size x-offset) margin) :y2 (- (+ cell-size y-offset) margin) :stroke-width 30 :stroke p1-color :stroke-linecap "round" }]
+             [:line {:x1 (- (+ cell-size x-offset) margin) :y1 (+ y-offset margin) :x2 (+ x-offset margin) :y2 (- (+ cell-size y-offset) margin) :stroke-width 30 :stroke p1-color :stroke-linecap "round" }] ] 
       ; classic "O"
-      :o [:g [:circle {:cx (+ cell-center x-offset) :cy (+ cell-center y-offset)
-                       :r (/ content-size 2)
-                       :stroke-width 25 :stroke p2-color :stroke-linecap "round" }]]
+      :o [:g [:circle {:cx (+ cell-center x-offset) :cy (+ cell-center y-offset) :r (- (/ cell-size 2) margin) :stroke-width 30 :stroke p2-color :stroke-linecap "round" :fill "none" }]]
       ; default (empty)
       nil )))
 
@@ -48,24 +42,24 @@
 
 (defn button-array []
   [:g (map (fn [i] 
-        (let [r (int (/ i 3))
-              c (mod i 3)]
+        (let [r (int (/ i rules/board-height))
+              c (mod i rules/board-width)]
           [:rect {:x (* c 400) :y (* r 400) :width 400 :height 400 
                   :fill "transparent"
                   :on-click (e/mouse-click-handler i) 
                   :pointer-events "bounding-box" 
                   :key i }] )) 
-      (range 9)) ])
+      (range rules/cell-count)) ])
 
 (defn main-panel []
-  (let [board (f/subscribe [:board]) ]
+  (let [db (f/subscribe [:db])]
     (fn []
       [:div
         [:svg {:class "main-panel"
                :view-box "0 0 1200 1200" }
-          [board-view board]
+          [board-view (:board @db)]
           [button-array] ]
-        ; [:pre (with-out-str (cljs.pprint/pprint board))]
+        ; [:pre {:style {:color "#fff"}} (with-out-str (cljs.pprint/pprint @db))]
       ] )))
 
 ; (def color-background "rgba(32,32,32,1)")
