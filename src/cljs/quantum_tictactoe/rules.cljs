@@ -4,5 +4,8 @@
 (def board-width 3)
 (def board-height 3)
 
-(defn whose-turn [{history :history}]
-   )
+(defn next-turn [board]
+  (case (:player (last (:history board)))
+    :x :o
+    :o :x
+    :x )) ; default first move

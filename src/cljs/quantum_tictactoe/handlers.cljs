@@ -6,7 +6,7 @@
 (def default-db {
   :board {
     :cells (into [] (repeat rules/cell-count nil)) ; [ nil nil nil  nil nil nil  nil nil nil ] ; tic-tac-toe, 9 cells
-    :history [] ; list of moves, first move first
+    :history [] ; [{ :player <:x,:o>, :type <:classic,:entangle,:collapse>, :position <number|[number,number]> }]
   } })
 
 (f/reg-event-db :initialize-db
@@ -14,6 +14,10 @@
 
 (f/reg-event-db :board-click
   (fn [db [_ {:keys [position]}]]
-    ; TODO: examine board state to decide what gets changed, if anything, when a cell is clicked
-    (assoc-in db [:board :cells position] 
-      (case (rand-int 2) 0 :x 1 :o nil) ) ))
+    (let [next-turn (rules/next-turn (:board db))
+          history-count (count (get-in db [:board :history]))]
+      (-> db
+        (assoc-in [:board :cells position]
+          next-turn)
+        (assoc-in [:board :history history-count]
+          {:player next-turn, :type :classic, :position position}) ) )))
