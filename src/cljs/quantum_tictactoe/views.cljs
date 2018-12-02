@@ -2,6 +2,8 @@
   (:require
     [reagent.core :as r]
     [re-frame.core :as f]
+    [goog.string :as gstring]
+    [goog.string.format]
     [quantum-tictactoe.events :as e]
     [quantum-tictactoe.rules :as rules] ))
 
@@ -28,17 +30,23 @@
       ; default (empty)
       nil )))
 
-(defn board-view [board]
-  [:g
-    ; main board background
-    [:g [:rect {:x 0 :y 0 :width 1200 :height 1200 :fill "#202020"}]
-        [:line {:x1 400 :y1 50 :x2 400 :y2 1150 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
-        [:line {:x1 800 :y1 50 :x2 800 :y2 1150 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
-        [:line {:x1 50 :y1 400 :x2 1150 :y2 400 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
-        [:line {:x1 50 :y1 800 :x2 1150 :y2 800 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }] ]
-    ; cells
-    (let [cells (:cells board)]
-      (group (map cell-view cells (range rules/cell-count))) )])
+(defn board-view
+  ([board [translate-x translate-y] scale opacity]
+    [:g {:transform (gstring/format "translate(%d %d) scale(%d %d)" translate-x translate-y scale scale)
+         :opacity opacity}
+      ; main board background
+      [:g
+          [:rect {:x 0 :y 0 :width 1200 :height 1200 :fill "#202020"}]
+          [:line {:x1 400 :y1 50 :x2 400 :y2 1150 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
+          [:line {:x1 800 :y1 50 :x2 800 :y2 1150 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
+          [:line {:x1 50 :y1 400 :x2 1150 :y2 400 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }]
+          [:line {:x1 50 :y1 800 :x2 1150 :y2 800 :stroke-width 13 :stroke "#606060" :stroke-linecap "round" }] ]
+      ; cells
+      (let [cells (:cells board)]
+        (group (map cell-view cells (range rules/cell-count))) )
+    ])
+  ([board]
+    (board-view board [0 0] 1 1) ))
 
 (defn button-array []
   [:g (map (fn [i] 
